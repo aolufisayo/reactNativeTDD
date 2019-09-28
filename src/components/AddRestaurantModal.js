@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Modal,
+  View,
   TextInput,
   Text
 } from 'react-native';
@@ -27,8 +28,6 @@ class AddRestaurantModal extends Component {
 
   }
 
-
-
   handleSaveText = (text) => {
     this.setState({ text })
 
@@ -45,37 +44,50 @@ class AddRestaurantModal extends Component {
     onSave(text)
     this.setState({ text: '' })
   }
+
+  handleCancel = () => {
+    const { onCancel } = this.props;
+    onCancel()
+    this.setState({ text: '' })
+  }
   render() {
     const { visible } = this.props
     const { text } = this.state
 
 
     return (
-      <Modal
-        visible={visible}
-        animationType='slide'
-      >
+      <View style={styles.container}>
+        <Modal
+          visible={visible}
+          animationType='slide'
+        >
 
-        <Input
-          label="Restaurant Name"
-          testID="addRestaurantText"
-          value={text}
-          onChangeText={this.handleSaveText}
-        />
-        <Button
-          testID="addRestaurantSaveButton"
-          title="Save"
-          onPress={this.handleSave}
-        ></Button>
+          <Input
+            label="Restaurant Name"
+            testID="addRestaurantText"
+            value={text}
+            onChangeText={this.handleSaveText}
+          />
+          <Button
+            testID="addRestaurantSaveButton"
+            title="Save"
+            onPress={this.handleSave}
+          ></Button>
+          <Button
+            testID="cancelAddRestaurantButton"
+            title="Cancel"
+            onPress={this.handleCancel}
+          ></Button>
 
-      </Modal>
+        </Modal>
+      </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center'
   }
 });
