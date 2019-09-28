@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import Reactotron from 'reactotron-react-native'
 import { ListItem } from 'react-native-elements'
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation'
 import AddRestaurant from './AddRestaurant';
 import AddRestaurantModal from './AddRestaurantModal';
 
@@ -61,7 +63,7 @@ class RestaurantList extends Component {
         < FlatList
           data={restaurantNames}
           keyExtractor={item => item}
-          renderItem={({ item }) => <ListItem title={item} />}
+          renderItem={({ item }) => (<ListItem title={item} />)}
         />
 
 
@@ -71,10 +73,19 @@ class RestaurantList extends Component {
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
-export default RestaurantList;
+
+const RestaurantScreen = createStackNavigator({
+  Restaurants: {
+    screen: RestaurantList,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Restaurants',
+    }),
+  }
+}, {
+    initialRouteName: 'Restaurants'
+  });
+
+export default createAppContainer(RestaurantScreen);
+
+

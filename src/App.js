@@ -17,7 +17,6 @@ import Reactotron from 'reactotron-react-native'
 import RestaurantList from './components/RestaurantList';
 
 
-
 class App extends Component {
 
   constructor(props) {
@@ -29,7 +28,9 @@ class App extends Component {
   render() {
 
     return (
-      <RestaurantList />
+      <View style={styles.container}>
+        <RestaurantList />
+      </View>
     );
   }
 };
@@ -39,5 +40,7 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+
 
 export default App;

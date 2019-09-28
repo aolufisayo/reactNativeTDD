@@ -17,7 +17,6 @@ import Reactotron from 'reactotron-react-native'
 
 
 class AddRestaurant extends Component {
-
   constructor(props) {
     super(props)
 
