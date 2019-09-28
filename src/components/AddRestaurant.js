@@ -10,9 +10,9 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  Button
+  Text
 } from 'react-native';
+import { Button } from 'react-native-elements'
 import Reactotron from 'reactotron-react-native'
 
 
@@ -36,7 +36,7 @@ class AddRestaurant extends Component {
           testID="addRestaurantButton"
           title="Add Restaurant"
           onPress={this.handlePress}
-        ></Button>
+        />
 
       </View>
     );

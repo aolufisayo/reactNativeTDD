@@ -9,11 +9,11 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  View,
+  Modal,
   TextInput,
-  Text,
-  Button
+  Text
 } from 'react-native';
+import { Button, Input } from 'react-native-elements'
 import Reactotron from 'reactotron-react-native'
 
 
@@ -48,16 +48,19 @@ class AddRestaurantModal extends Component {
   render() {
     const { visible } = this.props
     const { text } = this.state
-    if (!visible) {
-      return null
-    }
+
 
     return (
-      <View >
-        <TextInput
+      <Modal
+        visible={visible}
+        animationType='slide'
+      >
+
+        <Input
+          label="Restaurant Name"
           testID="addRestaurantText"
           value={text}
-          onChangeText={(text) => this.handleSaveText(text)}
+          onChangeText={this.handleSaveText}
         />
         <Button
           testID="addRestaurantSaveButton"
@@ -65,7 +68,7 @@ class AddRestaurantModal extends Component {
           onPress={this.handleSave}
         ></Button>
 
-      </View>
+      </Modal>
     );
   }
 };

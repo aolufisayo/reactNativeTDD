@@ -11,10 +11,10 @@ import {
   StyleSheet,
   View,
   FlatList,
-  Text,
   Button
 } from 'react-native';
 import Reactotron from 'reactotron-react-native'
+import { ListItem } from 'react-native-elements'
 import AddRestaurant from './components/AddRestaurant';
 import AddRestaurantModal from './components/AddRestaurantModal';
 
@@ -66,10 +66,11 @@ class App extends Component {
 
         <AddRestaurantModal visible={this.state.isVisible} onSave={this.handleSave} />
 
+
         <FlatList
           data={restaurantNames}
-          keyExtractor={item => item}
-          renderItem={({ item }) => <Text>{item}</Text>}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => <ListItem title={item} />}
         />
 
       </View >
