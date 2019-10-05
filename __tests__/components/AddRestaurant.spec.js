@@ -62,7 +62,8 @@ describe("Add restaurant Modal", () => {
 
     it('displays validation error message', () => {
       let errorComponent = renderer.create(<AddRestaurantModal />).getInstance()
-      errorComponent.handleSave('')
+      errorComponent.handleSaveText('')
+      errorComponent.handleSave()
       expect(errorComponent.state.errorMessage).toEqual('THIS FIELD IS REQUIRED')
     })
   })
