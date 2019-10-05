@@ -46,7 +46,7 @@ class RestaurantList extends Component {
 
   }
 
-  handleCancelPress = () => {
+  handleCancel = () => {
     this.setState({ isVisible: false })
   }
 
@@ -57,7 +57,7 @@ class RestaurantList extends Component {
       <View >
         <AddRestaurant onButtonPress={this.onHandlePress} />
 
-        <AddRestaurantModal visible={this.state.isVisible} onSave={this.handleSave} onCancel={this.handleCancelPress} />
+        <AddRestaurantModal visible={this.state.isVisible} onSave={this.handleSave} onCancel={this.handleCancel} />
 
 
         < FlatList

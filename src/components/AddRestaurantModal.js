@@ -11,10 +11,9 @@ import {
   StyleSheet,
   Modal,
   View,
-  TextInput,
-  Text
+  TextInput
 } from 'react-native';
-import { Button, Input } from 'react-native-elements'
+import { Text, Button, Input, FormValidationMessage } from 'react-native-elements'
 import Reactotron from 'reactotron-react-native'
 
 
@@ -23,36 +22,39 @@ class AddRestaurantModal extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: ''
+      restaurantName: '',
+      errorMessage: ''
     }
 
   }
-
-  handleSaveText = (text) => {
-    this.setState({ text })
-
+  handleSaveText = (restaurantName) => {
+    this.setState({ restaurantName })
   }
 
   handleSave = () => {
-    const { text } = this.state
+    const { restaurantName } = this.state
     const { onSave } = this.props
-    Reactotron.log({
-      name: 'handleSave from restaurant modal',
-      value: this.state.text
-    })
-
-    onSave(text)
-    this.setState({ text: '' })
+    if (restaurantName === '') {
+      this.handleError()
+      return
+    }
+    onSave(restaurantName)
+    this.setState({ restaurantName: '' })
   }
 
   handleCancel = () => {
     const { onCancel } = this.props;
     onCancel()
-    this.setState({ text: '' })
+    this.setState({ restaurantName: '', errorMessage: '' })
   }
+
+  handleError = () => {
+    this.setState({ errorMessage: 'THIS FIELD IS REQUIRED' })
+  }
+
   render() {
     const { visible } = this.props
-    const { text } = this.state
+    const { restaurantName, errorMessage } = this.state
 
 
     return (
@@ -61,12 +63,16 @@ class AddRestaurantModal extends Component {
           visible={visible}
           animationType='slide'
         >
+          <Text h3 style={{ margin: 20 }}>Add Restaurant</Text>
 
           <Input
             label="Restaurant Name"
             testID="addRestaurantText"
-            value={text}
+            value={restaurantName}
             onChangeText={this.handleSaveText}
+            autoFocus={true}
+            errorStyle={{ color: 'red' }}
+            errorMessage={errorMessage}
           />
           <Button
             testID="addRestaurantSaveButton"

@@ -8,15 +8,23 @@ const testID = (id) => {
   return cmp => cmp.props().testID === id
 }
 
-describe("Cancel Add Restaurant", () => {
-
-  it('cancel adding restaurant by calling onCancel', () => {
-    const handleCancel = jest.fn()
-    const wrapper = shallow(<AddRestaurantModal visible={true} onCancel={handleCancel} />)
+describe("Upon Cancellation", () => {
+  let handleCancel
+  let wrapper
+  beforeEach(() => {
+    handleCancel = jest.fn()
+    wrapper = shallow(<AddRestaurantModal visible={true} onCancel={handleCancel} />)
     wrapper.findWhere(testID('cancelAddRestaurantButton')).simulate('press')
+
+  })
+
+  it('clears the restaurant input field', () => {
+    expect(wrapper.findWhere(testID('addRestaurantText')).props().value).toEqual('')
+
+
+  })
+
+  it('calls the cancel method', () => {
     expect(handleCancel).toHaveBeenCalled()
-
-
-
   })
 })
