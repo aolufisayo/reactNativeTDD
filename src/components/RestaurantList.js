@@ -22,6 +22,9 @@ import AddRestaurantModal from './AddRestaurantModal';
 
 
 class RestaurantList extends Component {
+  static navigationOptions = {
+    title: 'Restaurants'
+  }
 
   constructor(props) {
     super(props)
@@ -52,40 +55,24 @@ class RestaurantList extends Component {
 
 
   render() {
+    const { navigation } = this.props
     const { restaurantNames } = this.state
     return (
       <View >
         <AddRestaurant onButtonPress={this.onHandlePress} />
-
         <AddRestaurantModal visible={this.state.isVisible} onSave={this.handleSave} onCancel={this.handleCancel} />
-
-
-        < FlatList
+        <FlatList
           data={restaurantNames}
           keyExtractor={item => item}
-          renderItem={({ item }) => (<ListItem title={item} />)}
+          renderItem={({ item }) => (<ListItem title={item} chevron onPress={() => navigation.navigate('DishList', { name: item })} />)}
+
         />
-
-
-
       </View >
     );
   }
 };
 
 
-
-const RestaurantScreen = createStackNavigator({
-  Restaurants: {
-    screen: RestaurantList,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Restaurants',
-    }),
-  }
-}, {
-    initialRouteName: 'Restaurants'
-  });
-
-export default createAppContainer(RestaurantScreen);
+export default RestaurantList;
 
 

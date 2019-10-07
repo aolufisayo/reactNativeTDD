@@ -14,9 +14,21 @@ import {
   Button
 } from 'react-native';
 import Reactotron from 'reactotron-react-native'
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import RestaurantList from './components/RestaurantList';
+import DishList from './components/DishList';
 
 
+
+const rootStack = createStackNavigator({
+  RestaurantList,
+  DishList
+}, {
+    initialRouteName: 'RestaurantList'
+  })
+
+const RootStack = createAppContainer(rootStack);
 class App extends Component {
 
   constructor(props) {
@@ -29,7 +41,7 @@ class App extends Component {
 
     return (
       <View style={styles.container}>
-        <RestaurantList />
+        <RootStack />
       </View>
     );
   }
