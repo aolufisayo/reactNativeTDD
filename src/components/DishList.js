@@ -13,21 +13,23 @@ import {
   Text,
   FlatList
 } from 'react-native';
+import { observer } from 'mobx-react'
 import { Button, ListItem } from 'react-native-elements'
 import DishListModal from './DishListModal';
 
+@observer
 class DishList extends Component {
   static navigationOptions = ({ navigation }) => {
+    const restaurants = navigation.getParam('restaurants')
     return {
-      title: navigation.getParam('name')
+      title: restaurants.name
     }
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      isVisible: false,
-      dishNames: []
+      isVisible: false
     }
   }
 
@@ -38,10 +40,11 @@ class DishList extends Component {
   }
 
   handleSave = (dishName) => {
-    this.setState((prevState) => ({
-      isVisible: false,
-      dishNames: [dishName, ...prevState.dishNames]
-    }))
+    const restaurants = this.props.navigation.getParam('restaurants')
+    this.setState({
+      isVisible: false
+    })
+    restaurants.addDish(dishName)
   }
 
   handleCancel = () => {
@@ -53,7 +56,7 @@ class DishList extends Component {
 
 
   render() {
-    const { dishNames } = this.state
+    const { dishNames } = this.props.navigation.getParam('restaurants')
     return (
       <View >
         <Button
@@ -63,7 +66,7 @@ class DishList extends Component {
         />
         <DishListModal visible={this.state.isVisible} onSave={this.handleSave} onCancel={this.handleCancel} />
         <FlatList
-          data={dishNames}
+          data={dishNames.slice()}
           keyExtractor={item => item}
           renderItem={({ item }) => (<ListItem title={item} chevron />)}
 

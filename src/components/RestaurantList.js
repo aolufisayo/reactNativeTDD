@@ -15,12 +15,14 @@ import {
 } from 'react-native';
 import Reactotron from 'reactotron-react-native'
 import { ListItem } from 'react-native-elements'
+import { inject, observer } from 'mobx-react'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation'
 import AddRestaurant from './AddRestaurant';
 import AddRestaurantModal from './AddRestaurantModal';
 
-
+@inject('restaurantStore')
+@observer
 class RestaurantList extends Component {
   static navigationOptions = {
     title: 'Restaurants'
@@ -40,12 +42,13 @@ class RestaurantList extends Component {
   }
 
   handleSave = (restaurant) => {
-    this.setState((prevState) => (
+    const { restaurantStore } = this.props
+    this.setState(
       {
-        isVisible: false,
-        restaurantNames: [restaurant, ...prevState.restaurantNames]
+        isVisible: false
       }
-    ))
+    )
+    restaurantStore.addRestaurant(restaurant)
 
   }
 
@@ -56,15 +59,15 @@ class RestaurantList extends Component {
 
   render() {
     const { navigation } = this.props
-    const { restaurantNames } = this.state
+    const { restaurants } = this.props.restaurantStore
     return (
       <View >
         <AddRestaurant onButtonPress={this.onHandlePress} />
         <AddRestaurantModal visible={this.state.isVisible} onSave={this.handleSave} onCancel={this.handleCancel} />
         <FlatList
-          data={restaurantNames}
-          keyExtractor={item => item}
-          renderItem={({ item }) => (<ListItem title={item} chevron onPress={() => navigation.navigate('DishList', { name: item })} />)}
+          data={restaurants.slice()}
+          keyExtractor={item => item.name}
+          renderItem={({ item: restaurants }) => (<ListItem title={restaurants.name} chevron onPress={() => navigation.navigate('DishList', { restaurants })} />)}
 
         />
       </View >

@@ -14,12 +14,14 @@ import {
   Button
 } from 'react-native';
 import Reactotron from 'reactotron-react-native'
+import { Provider } from 'mobx-react'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import RestaurantList from './components/RestaurantList';
 import DishList from './components/DishList';
+import RestaurantStore from './store/restaurantStore';
 
-
+const restaurantStore = new RestaurantStore()
 
 const rootStack = createStackNavigator({
   RestaurantList,
@@ -41,7 +43,9 @@ class App extends Component {
 
     return (
       <View style={styles.container}>
-        <RootStack />
+        <Provider restaurantStore={restaurantStore}>
+          <RootStack />
+        </Provider>
       </View>
     );
   }
